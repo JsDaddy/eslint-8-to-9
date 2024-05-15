@@ -1,0 +1,10 @@
+# Compiled output
+/dist
+
+# Node
+/node_modules
+
+# Visual Studio Code
+.vscode
+
+/.angular
