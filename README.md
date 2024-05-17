@@ -1,27 +1,42 @@
-# Eslint8To9
+# ESLint Version Upgrade Guide (v8 to v9) for Angular Projects
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.1.
+## Overview
 
-## Development server
+This guide outlines the steps to upgrade ESLint from version 8 to version 9 in an Angular project. Follow these steps to ensure compatibility and update your project's linting setup.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Instructions
 
-## Code scaffolding
+- Update package.json Script
+  - Change the **lint** script in **package.json** from **"lint": "ng lint"** to **"lint": "npx eslint ."** as a temporary solution until **@angular-eslint/builder** supports ESLint version 9.
+- Upgrade ESLint
+  - Execute the following command to upgrade ESLint from version 8 to version 9:
+    `npm i eslint@9`
+- Create eslint.config.js
+  - Create a new file named eslint.config.js in the root directory of your project.
+- Update ESLint Configuration
+  - Move the content from .eslintignore into eslint.config.js. Format it as follows:
+  ```javascript
+  export default [
+  ...,
+  { ignores: ['**/.angular/*', '**/test/*'] },
+  ...
+  ];
+  ```
+- Remove .eslintignore
+  - Delete the **.eslintignore** file as its settings have been merged into **eslint.config.js**.
+- Configure eslint.config.js
+  - Refer to the examples and differences between branches [eslint-8](https://github.com/GlebChiz/eslint-8-to-9/tree/eslint-8) and [eslint-9](https://github.com/GlebChiz/eslint-8-to-9/tree/eslint-9) to accurately configure the new **eslint.config.js**. Remove settings such as **root** and **overrides**, and adjust plugin imports as necessary... For details on specific property replacements, visit the [migration guide to ESLint 9](https://eslint.org/docs/latest/use/migrate-to-9.0.0).
+- Remove .eslintrc.json
+  - Eliminate the **.eslintrc.json** file since it has been superseded by **eslint.config.js**.
+- Run Lint
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  - To test the new setup, run:
 
-## Build
+  ```javascript
+  npm run lint
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+  ```
 
-## Running unit tests
+## Future Updates
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- This guide will be updated when @angular-eslint/builder includes support for ESLint version 9.
