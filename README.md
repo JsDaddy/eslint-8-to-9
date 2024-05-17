@@ -10,9 +10,9 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
   - Change the **lint** script in **package.json** from **"lint": "ng lint"** to **"lint": "npx eslint ."** as a temporary solution until **@angular-eslint/builder** supports ESLint version 9.
 - Upgrade ESLint
   - Execute the following command to upgrade ESLint from version 8 to version 9:
-    `npm i eslint@9`
+    `npm i eslint@latest`
 - Create eslint.config.js
-  - Create a new file named eslint.config.js in the root directory of your project.
+  - Create a new file named **eslint.config.js** in the root directory of your project.
 - Update ESLint Configuration
   - Move the content from .eslintignore into eslint.config.js. Format it as follows:
   ```javascript
@@ -25,7 +25,7 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
 - Remove .eslintignore
   - Delete the **.eslintignore** file as its settings have been merged into **eslint.config.js**.
 - Configure eslint.config.js
-  - Refer to the examples and differences between branches [eslint-8](https://github.com/GlebChiz/eslint-8-to-9/tree/eslint-8) and [eslint-9](https://github.com/GlebChiz/eslint-8-to-9/tree/eslint-9) to accurately configure the new **eslint.config.js**. Remove settings such as **root** and **overrides**, and adjust plugin imports as necessary... For details on specific property replacements, visit the [migration guide to ESLint 9](https://eslint.org/docs/latest/use/migrate-to-9.0.0).
+  - Refer to the examples and differences between branches [eslint-8](https://github.com/GlebChiz/eslint-8-to-9/blob/eslint-8/.eslintrc.json) and [eslint-9](https://github.com/GlebChiz/eslint-8-to-9/blob/eslint-9/eslint.config.js) to accurately configure the new **eslint.config.js**. Remove settings such as **root** and **overrides**, and adjust plugin imports as necessary... For details on specific property replacements, visit the [migration guide to ESLint 9](https://eslint.org/docs/latest/use/migrate-to-9.0.0).
 - Remove .eslintrc.json
   - Eliminate the **.eslintrc.json** file since it has been superseded by **eslint.config.js**.
 - Run Lint
