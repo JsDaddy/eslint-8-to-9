@@ -35,6 +35,7 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
   ```
 
   - Add languageOptions
+    `npm i globals -D`
 
   ```javascript
   export default [
@@ -88,6 +89,7 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
   ```
 
   - Add recommended rules
+    `npm i @eslint/js -D`
 
   ```javascript
   import js from '@eslint/js';
@@ -106,6 +108,8 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
 
   ```javascript
   import js from '@eslint/js';
+  import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
+  import angularEslintPlugin from '@angular-eslint/eslint-plugin';
   export default [
     {
         ignores: ['**/.angular/*', '**/test/*', '**/coverage/*'],

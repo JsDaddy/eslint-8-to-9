@@ -1,6 +1,8 @@
 import typescriptEslintParser from "@typescript-eslint/parser";
 import typescriptEslintPlugin from "@typescript-eslint/eslint-plugin";
 import angularEslintPlugin from "@angular-eslint/eslint-plugin";
+import js from "@eslint/js";
+import globals from "globals";
 
 export default [
   {
@@ -12,7 +14,8 @@ export default [
     ],
   },
   {
-    files: ["src/**/*.ts"],
+    ...js.configs.recommended,
+    files: ["**/*.ts"],
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: "module",
@@ -22,8 +25,11 @@ export default [
         createDefaultProgram: true,
       },
       globals: {
-        window: "readonly",
-        document: "readonly",
+        ...globals.browser,
+        ...globals.jasmine,
+        Stripe: true,
+        cy: true,
+        Cypress: true,
       },
     },
     plugins: {
@@ -298,4 +304,20 @@ export default [
       "@angular-eslint/no-input-rename": "off",
     },
   },
+  // {
+  //   ...typescriptEslintPlugin.configs.recommended,
+  //   files: ["**/*.html"],
+  //   plugins: {
+  //     "@typescript-eslint": typescriptEslintPlugin,
+  //   },
+  //   rules: {
+  //     "@typescript-eslint/no-non-null-assertion": "error",
+  //   },
+  //   languageOptions: {
+  //     globals: {
+  //       ...globals.browser,
+  //       dataLayer: true,
+  //     },
+  //   },
+  // },
 ];
