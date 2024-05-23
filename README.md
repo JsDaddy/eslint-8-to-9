@@ -16,16 +16,136 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
 - Update ESLint Configuration
   - Move the content from .eslintignore into eslint.config.js. Format it as follows:
   ```javascript
-  export default [
-  ...,
-  { ignores: ['**/.angular/*', '**/test/*'] },
-  ...
-  ];
+  export default [{ ignores: ["**/.angular/*", "**/test/*"] }];
   ```
 - Remove .eslintignore
   - Delete the **.eslintignore** file as its settings have been merged into **eslint.config.js**.
-- Configure eslint.config.js
-  - Refer to the examples and differences between branches [eslint-8](https://github.com/GlebChiz/eslint-8-to-9/blob/eslint-8/.eslintrc.json) and [eslint-9](https://github.com/GlebChiz/eslint-8-to-9/blob/eslint-9/eslint.config.js) to accurately configure the new **eslint.config.js**. Remove settings such as **root** and **overrides**, and adjust plugin imports as necessary... For details on specific property replacements, visit the [migration guide to ESLint 9](https://eslint.org/docs/latest/use/migrate-to-9.0.0).
+- Configure eslint.config.js - for ts files
+
+  ```javascript
+  export default [
+    { ignores: ["**/.angular/*", "**/test/*"] },
+    {
+      files: ["**/*.ts"],
+      languageOptions: {},
+      plugins: {},
+      rules: {},
+    },
+  ];
+  ```
+
+  - Add languageOptions
+
+  ```javascript
+  export default [
+    ...
+    {
+      ...
+      languageOptions: {
+        ecmaVersion: 2020,
+        sourceType: "module",
+        parser: typescriptEslintParser,
+        parserOptions: {
+          project: ["./tsconfig.json"],
+          createDefaultProgram: true,
+        },
+        globals: {
+          ...globals.browser,
+          ...globals.jasmine,
+          Stripe: true,
+          cy: true,
+          Cypress: true,
+        },
+      },
+      ...
+    },
+    ...
+  ];
+  ```
+
+  - Add additional plugins and rules
+
+  ```javascript
+  import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
+  import angularEslintPlugin from '@angular-eslint/eslint-plugin';
+  export default [
+    ...,
+    {
+      ...,
+      plugins: {
+          '@typescript-eslint': typescriptEslintPlugin,
+          '@angular-eslint': angularEslintPlugin,
+      },
+      rules: {
+        ...,
+        '@typescript-eslint/explicit-function-return-type': 'error',
+        ...
+      },
+      ...,
+    },
+    ...
+  ];
+  ```
+
+  - Add recommended rules
+
+  ```javascript
+  import js from '@eslint/js';
+  export default [
+    ...
+    {
+      ...,
+      ...js.configs.recommended,
+      ...,
+    },
+    ...
+  ];
+  ```
+
+  - Final result
+
+  ```javascript
+  import js from '@eslint/js';
+  export default [
+    {
+        ignores: ['**/.angular/*', '**/test/*', '**/coverage/*'],
+    },
+    {
+        ...js.configs.recommended,
+        files: ['**/*.ts'],
+        languageOptions: {
+            ecmaVersion: 2020,
+            sourceType: 'module',
+            parser: typescriptEslintParser,
+            parserOptions: {
+                project: ['./tsconfig.json'],
+                createDefaultProgram: true,
+            },
+            globals: {
+                ...globals.browser,
+                ...globals.jasmine,
+                Stripe: true,
+                cy: true,
+                Cypress: true,
+            },
+        },
+        plugins: {
+            '@typescript-eslint': typescriptEslintPlugin,
+            '@angular-eslint': angularEslintPlugin,
+        },
+        rules: {
+            ...,
+            '@typescript-eslint/explicit-member-accessibility': 'error',
+            '@angular-eslint/no-output-on-prefix': 'off',
+            'import/no-unresolved': 'off',
+            ...,
+        }
+    },
+    ...
+  ];
+  ```
+
+- Repeat those steps for other files [.html, .json, .js]
 - Remove .eslintrc.json
   - Eliminate the **.eslintrc.json** file since it has been superseded by **eslint.config.js**.
 - Run Lint
@@ -39,4 +159,4 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
 
 ## Future Updates
 
-- This guide will be updated when @angular-eslint/builder includes support for ESLint version 9.
+- This guide will be updated when @angular-eslint/builder and others plugins include support for ESLint version 9.
