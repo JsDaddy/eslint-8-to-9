@@ -11,16 +11,18 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
 - Upgrade ESLint
   - Execute the following command to upgrade ESLint from version 8 to version 9:
     `npm i eslint@latest`
-- Create eslint.config.js
+- Create **eslint.config.js**
   - Create a new file named **eslint.config.js** in the root directory of your project.
 - Update ESLint Configuration
-  - Move the content from .eslintignore into eslint.config.js. Format it as follows:
+  - Move the content from .eslintignore into **eslint.config.js**. Format it as follows:
   ```javascript
   export default [{ ignores: ["**/.angular/*", "**/test/*"] }];
   ```
 - Remove .eslintignore
   - Delete the **.eslintignore** file as its settings have been merged into **eslint.config.js**.
-- Configure eslint.config.js - for ts files
+- Configure **eslint.config.js** - for TypeScript Files
+
+  - Basic Configuration:
 
   ```javascript
   export default [
@@ -35,74 +37,82 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
   ```
 
   - Add languageOptions
-    `npm i globals -D`
 
-  ```javascript
-  export default [
-    ...
-    {
+    - Install necessary packages:
+      `npm i globals -D`
+    - Update **eslint.config.js**:
+
+    ```javascript
+    export default [
       ...
-      languageOptions: {
-        ecmaVersion: 2020,
-        sourceType: "module",
-        parser: typescriptEslintParser,
-        parserOptions: {
-          project: ["./tsconfig.json"],
-          createDefaultProgram: true,
+      {
+        ...
+        languageOptions: {
+          ecmaVersion: 2020,
+          sourceType: "module",
+          parser: typescriptEslintParser,
+          parserOptions: {
+            project: ["./tsconfig.json"],
+            createDefaultProgram: true,
+          },
+          globals: {
+            ...globals.browser,
+            ...globals.jasmine,
+            Stripe: true,
+            cy: true,
+            Cypress: true,
+          },
         },
-        globals: {
-          ...globals.browser,
-          ...globals.jasmine,
-          Stripe: true,
-          cy: true,
-          Cypress: true,
-        },
-      },
-      ...
-    },
-    ...
-  ];
-  ```
-
-  - Add additional plugins and rules
-
-  ```javascript
-  import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
-  import angularEslintPlugin from '@angular-eslint/eslint-plugin';
-  export default [
-    ...,
-    {
-      ...,
-      plugins: {
-          '@typescript-eslint': typescriptEslintPlugin,
-          '@angular-eslint': angularEslintPlugin,
-      },
-      rules: {
-        ...,
-        '@typescript-eslint/explicit-function-return-type': 'error',
         ...
       },
-      ...,
-    },
-    ...
-  ];
-  ```
+      ...
+    ];
+    ```
 
-  - Add recommended rules
-    `npm i @eslint/js -D`
+  - Add Plugins and Rules:
 
-  ```javascript
-  import js from '@eslint/js';
-  export default [
-    ...
-    {
+    - Update **eslint.config.js**:
+
+    ```javascript
+    import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
+    import angularEslintPlugin from '@angular-eslint/eslint-plugin';
+    export default [
       ...,
-      ...js.configs.recommended,
-      ...,
-    },
-    ...
-  ];
-  ```
+      {
+        ...,
+        plugins: {
+            '@typescript-eslint': typescriptEslintPlugin,
+            '@angular-eslint': angularEslintPlugin,
+        },
+        rules: {
+          ...,
+          '@typescript-eslint/explicit-function-return-type': 'error',
+          ...
+        },
+        ...,
+      },
+      ...
+    ];
+    ```
+
+  - Add Recommended Rules:
+
+    - Install recommended rules:
+      `npm i @eslint/js -D`
+    - Update **eslint.config.js**:
+
+    ```javascript
+    import js from '@eslint/js';
+    export default [
+      ...
+      {
+        ...,
+        ...js.configs.recommended,
+        ...,
+      },
+      ...
+    ];
+    ```
 
   - Final result
 
@@ -149,7 +159,8 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
   ];
   ```
 
-- Repeat those steps for other files [.html, .json, .js]
+- Repeat for Other Files
+  - Repeat the above steps to configure linting for other file types (**.html**, **.json**, **.js**).
 - Remove .eslintrc.json
   - Eliminate the **.eslintrc.json** file since it has been superseded by **eslint.config.js**.
 - Run Lint
