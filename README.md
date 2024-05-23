@@ -10,7 +10,7 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
   - Change the **lint** script in **package.json** from **"lint": "ng lint"** to **"lint": "npx eslint ."** as a temporary solution until **@angular-eslint/builder** supports ESLint version 9.
 - Upgrade ESLint
   - Execute the following command to upgrade ESLint from version 8 to version 9:
-    `npm i eslint@latest`
+    `npm i eslint@latest -D`
 - Create **eslint.config.js**
   - Create a new file named **eslint.config.js** in the root directory of your project.
 - Update ESLint Configuration
@@ -43,6 +43,8 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
     - Update **eslint.config.js**:
 
     ```javascript
+    import globals from 'globals';
+    import typescriptEslintParser from "@typescript-eslint/parser";
     export default [
       ...
       {
@@ -71,6 +73,8 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
 
   - Add Plugins and Rules:
 
+    - Update necessary packages:
+      `npm i @typescript-eslint/eslint-plugin@latest @typescript-eslint/parser@latest -D`
     - Update **eslint.config.js**:
 
     ```javascript
@@ -120,6 +124,8 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
   import js from '@eslint/js';
   import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
   import angularEslintPlugin from '@angular-eslint/eslint-plugin';
+  import globals from 'globals';
+  import typescriptEslintParser from "@typescript-eslint/parser";
   export default [
     {
         ignores: ['**/.angular/*', '**/test/*', '**/coverage/*'],
