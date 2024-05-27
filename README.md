@@ -71,6 +71,25 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
     ];
     ```
 
+  - Add Recommended Rules:
+
+    - Install recommended rules:
+      `npm i @eslint/js -D`
+    - Update **eslint.config.js**:
+
+    ```javascript
+    import js from '@eslint/js';
+    export default [
+      ...
+      {
+        ...,
+        ...js.configs.recommended,
+        ...,
+      },
+      ...
+    ];
+    ```
+
   - Add Plugins and Rules:
 
     - Update necessary packages:
@@ -93,25 +112,6 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
           '@typescript-eslint/explicit-function-return-type': 'error',
           ...
         },
-        ...,
-      },
-      ...
-    ];
-    ```
-
-  - Add Recommended Rules:
-
-    - Install recommended rules:
-      `npm i @eslint/js -D`
-    - Update **eslint.config.js**:
-
-    ```javascript
-    import js from '@eslint/js';
-    export default [
-      ...
-      {
-        ...,
-        ...js.configs.recommended,
         ...,
       },
       ...
@@ -175,9 +175,8 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
 
   ```javascript
   npm run lint
-
   ```
 
 ## Future Updates
 
-- This guide will be updated when @angular-eslint/builder and others plugins include support for ESLint version 9.
+- This guide will be updated when @angular-eslint/builder and others include support for ESLint version 9.
