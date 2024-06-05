@@ -1,10 +1,10 @@
 import typescriptEslintParser from "@typescript-eslint/parser";
-import typescriptEslintPlugin from "@typescript-eslint/eslint-plugin";
-import angularEslintPlugin from "@angular-eslint/eslint-plugin";
-import js from "@eslint/js";
+import eslint from "@eslint/js";
 import globals from "globals";
+import angular from "angular-eslint";
+import tseslint from "typescript-eslint";
 
-export default [
+export default tseslint.config(
   {
     ignores: [
       "**/.angular/*",
@@ -14,8 +14,13 @@ export default [
     ],
   },
   {
-    ...js.configs.recommended,
     files: ["**/*.ts"],
+    extends: [
+      eslint.configs.recommended,
+      ...tseslint.configs.recommended,
+      ...tseslint.configs.stylistic,
+      ...angular.configs.tsRecommended,
+    ],
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: "module",
@@ -31,10 +36,6 @@ export default [
         cy: true,
         Cypress: true,
       },
-    },
-    plugins: {
-      "@typescript-eslint": typescriptEslintPlugin,
-      "@angular-eslint": angularEslintPlugin,
     },
     rules: {
       "@typescript-eslint/member-ordering": [
@@ -304,20 +305,12 @@ export default [
       "@angular-eslint/no-input-rename": "off",
     },
   },
-  // {
-  //   ...typescriptEslintPlugin.configs.recommended,
-  //   files: ["**/*.html"],
-  //   plugins: {
-  //     "@typescript-eslint": typescriptEslintPlugin,
-  //   },
-  //   rules: {
-  //     "@typescript-eslint/no-non-null-assertion": "error",
-  //   },
-  //   languageOptions: {
-  //     globals: {
-  //       ...globals.browser,
-  //       dataLayer: true,
-  //     },
-  //   },
-  // },
-];
+  {
+    files: ["**/*.html"],
+    extends: [
+      ...angular.configs.templateRecommended,
+      ...angular.configs.templateAccessibility,
+    ],
+    rules: {},
+  },
+);
