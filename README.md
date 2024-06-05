@@ -46,7 +46,7 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
 
     ```javascript
     import tseslint from "typescript-eslint";
-    import globals from 'globals';
+    import globals from "globals";
     import typescriptEslintParser from "@typescript-eslint/parser";
     export default tseslint.config(
       ...
@@ -82,7 +82,7 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
     - Update **eslint.config.js**:
 
     ```javascript
-    import eslint from '@eslint/js';
+    import eslint from "@eslint/js";
     import angular from "angular-eslint";
     import tseslint from "typescript-eslint";
     export default tseslint.config(
