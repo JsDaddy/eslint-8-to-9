@@ -210,3 +210,7 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
   ```javascript
   npm run lint
   ```
+
+## Note
+
+- To migrate eslint 8 to eslint 9 without angular-eslint follow [eslint-9-without-angular-eslint](https://github.com/JsDaddy/eslint-8-to-9/tree/eslint-9)
