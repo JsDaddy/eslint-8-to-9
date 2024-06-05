@@ -176,7 +176,3 @@ This guide outlines the steps to upgrade ESLint from version 8 to version 9 in a
   ```javascript
   npm run lint
   ```
-
-## Future Updates
-
-- This guide will be updated when @angular-eslint/builder and others include support for ESLint version 9.
